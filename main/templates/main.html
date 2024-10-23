@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<h1>Welcome, {{ user.username }}!</h1>
+{% if last_login %}
+    <p>Last login: {{ last_login }}</p>
+{% endif %}
+<a href="{% url 'main:logout' %}">Logout</a>
+
+<h2>Restaurants</h2>
+<a href="{% url 'main:add_restaurant' %}">Add Restaurant</a>
+<ul>
+{% for restaurant in restaurants %}
+    <li>
+        {{ restaurant.nama }} - {{ restaurant.kategori }}
+        <p>{{ restaurant.deskripsi }}</p>
+    </li>
+{% endfor %}
+</ul>
+
+<h2>Foods</h2>
+<a href="{% url 'main:add_food' %}">Add Food</a>
+<ul>
+{% for food in foods %}
+    <li>
+        {{ food.nama }} - {{ food.kategori }}
+        <p>Price: {{ food.harga }}</p>
+        <p>Discount: {{ food.diskon }}%</p>
+        <p>Restaurant: {{ food.restoran.nama }}</p>
+        <p>{{ food.deskripsi }}</p>
+        <p>Average Rating: {{ food.average_rating }}/5 ({{ food.total_reviews }} reviews)</p>
+        <a href="{% url 'main:add_rating' food.id %}">Add Rating</a>
+        
+        <h4>Reviews:</h4>
+        {% if ratings_by_food|get_item:food.id %}
+            {% for rating in ratings_by_food|get_item:food.id %}
+                <div>
+                    <p>Rating: {{ rating.rating }}/5</p>
+                    {% if rating.comment %}
+                        <p>Comment: {{ rating.comment }}</p>
+                    {% endif %}
+                    <p>By: {{ rating.user.username }} ({{ rating.waktu_comment|date:"d/m/Y H:i" }})</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet</p>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}

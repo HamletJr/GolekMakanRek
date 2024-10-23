@@ -137,3 +137,4 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost",
                         "http://127.0.0.1",
                         "http://joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id", 
                         "https://joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id"]
+
