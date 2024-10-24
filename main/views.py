@@ -12,9 +12,9 @@ from datetime import datetime
 def show_main(request):
     context = {
         'features': [
-            {'title': 'Fast delivery', 'description': 'Promise to deliver within 30 mins'},
-            {'title': 'Pick up', 'description': 'Pickup delivery at your doorstep'},
-            {'title': 'Dine in', 'description': 'Enjoy your food fresh crispy and hot'},
+            {'title': 'Discover Culinary Delights'},
+            {'title': 'User-Friendly Experience'},
+            {'title': 'Local Insights and Recommendations'},
         ],
         'categories': [
             {'name': 'Lontong Balap', 'color': 'green', 'image': '../../static/img/homepage/lontongbalap.jpg'},
@@ -22,9 +22,9 @@ def show_main(request):
             {'name': 'Sego Sambel', 'color': 'yellow', 'image': '../../static/img/homepage/segosambel.jpg'},
         ],
         'services': [
-            {'title': 'Automated Packaging', 'description': '100% environment friendly packaging', 'icon': '../../static/img/homepage/ap.avif'},
-            {'title': 'Packed with Love', 'description': 'We deliver the best experiences', 'icon': '../../static/img/homepage/pl.jpg'},
-            {'title': 'Fastest Delivery', 'description': 'Promise to deliver within 30 mins', 'icon': '../../static/img/homepage/fd.webp'},
+            {'title': 'Curated Food Listings', 'description': 'We handpick the best eateries and food stalls in Surabaya, ensuring you always have access to the tastiest and most authentic dishes the city has to offer.', 'icon': '../../static/img/homepage/ap.avif'},
+            {'title': 'Up-to-Date Information', 'description': 'Stay informed with the latest updates, including menus, pricing, and operating hours, so you can plan your food adventures without any surprises.', 'icon': '../../static/img/homepage/pl.jpg'},
+            {'title': 'Community Feedback', 'description': 'Benefit from real reviews and ratings by fellow food enthusiasts, helping you make informed decisions on where to eat.', 'icon': '../../static/img/homepage/feedback.png'},
         ],
         'special_offer': {'price': 28, 'image': 'images/burger.jpg'},
         'additional_offers': [
