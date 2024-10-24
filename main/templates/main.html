@@ -2,14 +2,12 @@
 {% load static %}
 
 {% block content %}
-
-<!-- otw jadi prompter handal aowkawkwk -->
-<section class="max-w-7xl mx-auto py-16 px-4">
+<section class="bg-gray-200 py-16 relative overflow-hidden">
     <div class="grid md:grid-cols-2 gap-8 items-center">
-        <div>
+        <div class="max-w-7xl mx-auto px-4">
             <h1 class="text-5xl font-bold mb-4">
                 Fastest
-                <span class="text-orange-500"> Delivery </span>&
+                <span class="text-orange-500">Delivery</span> &
                 <br>
                 Easy <span class="text-orange-500">Pickup</span>
             </h1>
@@ -26,12 +24,17 @@
                 <span>Find Restaurants</span>
             </button>
         </div>
-        <div class="relative">
-            <div class="bg-yellow-400 rounded-full p-8">
-                <img src="{% static '../../static/img/homepage/sby.png' %}" alt="Food" class="rounded-full">
+
+        <div class="flex items-start space-x-8">
+            <div class="relative flex-shrink-0">
+                <div class="bg-yellow-400 rounded-full p-4 w-96 h-96 ml-[-150px]">
+                    <img src="{% static '../../static/img/homepage/sby.png' %}" 
+                        alt="Food Delivery" 
+                        class="rounded-full w-full h-full object-cover">
+                </div>
             </div>
 
-            <div class="absolute top-0 right-0 space-y-4">
+            <div class="flex-grow space-y-4">
                 {% for feature in features %}
                 <div class="bg-white p-4 rounded-lg shadow-lg">
                     <h3 class="font-semibold">{{ feature.title }}</h3>
@@ -41,21 +44,22 @@
             </div>
         </div>
     </div>
+
 </section>
 
 <section class="max-w-7xl mx-auto py-16 px-4">
-    <h2 class="text-4xl font-bold mb-8">
-        Our <span class="text-orange-500">Best Delivered</span><br>
+    <h2 class="text-4xl font-bold mb-12 text-center">
+        Our <span class="text-orange-500">Best Delivered</span>
         Categories
     </h2>
     <div class="grid md:grid-cols-3 gap-8">
         {% for category in categories %}
-        <div class="text-center">
-            <div class="bg-{{ category.color }}-100 rounded-full p-8 mb-4">
-                <img src="{% static category.image %}" alt="{{ category.name }}" class="rounded-full">
+        <div class="text-center flex flex-col items-center">
+            <div class="bg-{{ category.color }}-100 rounded-full p-8 mb-4 w-64 h-64 flex items-center justify-center">
+                <img src="{% static category.image %}" alt="{{ category.name }}" class="w-full h-full object-cover rounded-full">
             </div>
             <h3 class="font-semibold mb-2">{{ category.name }}</h3>
-            <button class="text-orange-500 flex items-center justify-center mx-auto">
+            <button class="text-orange-500 flex items-center justify-center">
                 Order Now 
                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -89,39 +93,10 @@
 
             <div class="relative">
                 <div class="relative">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-12">
-                        <img src="{% static 'images/chef-logo.png' %}" alt="Chef Logo" class="w-24">
-                    </div>
                     <img src="{% static '../../static/img/homepage/imroatus.jpg' %}" alt="Hot Pizza" class="w-full">
                 </div>
-
-                <div class="absolute top-0 right-0 space-y-4">
-                    <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-4">
-                        <div class="bg-gray-100 p-2 rounded-full">
-                            <img src="{% static '../../static/img/homepage/ufo.png' %}" alt="Drone Delivery" class="w-6 h-6">
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-900">Air delivery</h3>
-                            <p class="text-sm text-gray-600">Faster than ever at minimum low charge</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-4">
-                        <div class="bg-gray-100 p-2 rounded-full">
-                            <img src="{% static 'images/ai-icon.png' %}" alt="AI" class="w-6 h-6">
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-900">Automated</h3>
-                            <p class="text-sm text-gray-600">We process food order based on AI management</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
-
-    <div class="absolute top-0 left-0">
-        <img src="{% static 'images/chips.png' %}" alt="Decorative Chips" class="w-24 opacity-50">
     </div>
 </section>
 
@@ -138,31 +113,6 @@
                 </div>
                 <h3 class="font-semibold mb-2">{{ service.title }}</h3>
                 <p class="text-gray-600 text-sm">{{ service.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="max-w-7xl mx-auto py-16 px-4">
-    <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-yellow-100 p-8 rounded-xl">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h3 class="text-2xl font-bold mb-2">Buy 2<br>Get 1 free</h3>
-                    <div class="text-orange-500 font-bold text-xl">${{ special_offer.price }}</div>
-                </div>
-            </div>
-            <img src="{% static special_offer.image %}" alt="Special Offer" class="mx-auto">
-        </div>
-        <div class="space-y-4">
-            {% for offer in additional_offers %}
-            <div class="bg-{{ offer.color }}-100 p-8 rounded-xl">
-                <div class="flex justify-between items-start">
-                    <h3 class="text-xl font-bold">{{ offer.title }}</h3>
-                    <div class="text-orange-500 font-bold">{{ offer.discount }}</div>
-                </div>
-                <div class="text-2xl font-bold">${{ offer.price }}</div>
             </div>
             {% endfor %}
         </div>
@@ -193,14 +143,14 @@
                     </button>
                 </div>
                 <div class="flex flex-wrap justify-center items-center gap-8 mt-12">
-                    <img src="{% static 'images/brands/dunkin.png' %}" alt="Dunkin" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/starbucks.png' %}" alt="Starbucks" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/burger-king.png' %}" alt="Burger King" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/mcdonalds.png' %}" alt="McDonald's" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/pizza-hut.png' %}" alt="Pizza Hut" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/dominos.png' %}" alt="Domino's" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/subway.png' %}" alt="Subway" class="w-12 h-12 bg-white rounded-full p-2">
-                    <img src="{% static 'images/brands/kfc.png' %}" alt="KFC" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f1.jpg' %}" alt="food1" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f2.webp' %}" alt="food2" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f3.jpg' %}" alt="food3" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f4.webp' %}" alt="food4" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f5.jpg' %}" alt="food5" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f6.jpeg' %}" alt="food6" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f7.jpeg' %}" alt="food7" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static '../../static/img/homepage/footer/f8.jpeg' %}" alt="food8" class="w-12 h-12 bg-white rounded-full p-2">
                 </div>
             </div>
 
