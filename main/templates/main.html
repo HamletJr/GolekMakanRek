@@ -1,52 +1,242 @@
 {% extends 'base.html' %}
-{% load custom_filters %}
+{% load static %}
 
 {% block content %}
-<h1>Welcome, {{ user.username }}!</h1>
-{% if last_login %}
-    <p>Last login: {{ last_login }}</p>
-{% endif %}
-<a href="{% url 'main:logout' %}">Logout</a>
+<section class="max-w-7xl mx-auto py-16 px-4">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+            <h1 class="text-5xl font-bold mb-4">
+                Fastest
+                <span class="text-orange-500"> Delivery </span>&
+                <br>
+                Easy <span class="text-orange-500">Pickup</span>
+            </h1>
+            <p class="mb-8 text-gray-600">
+                When you are too lazy to cook,
+                <br>
+                we are just a click away!
+            </p>
+            <button class="bg-green-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-green-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <span>Find Restaurants</span>
+            </button>
+        </div>
+        <div class="relative">
+            <div class="bg-yellow-400 rounded-full p-8">
+                <img src="{% static '../../static/img/homepage/sby.png' %}" alt="Food" class="rounded-full">
+            </div>
 
-<h2>Restaurants</h2>
-<a href="{% url 'main:add_restaurant' %}">Add Restaurant</a>
-<ul>
-{% for restaurant in restaurants %}
-    <li>
-        {{ restaurant.nama }} - {{ restaurant.kategori }}
-        <p>{{ restaurant.deskripsi }}</p>
-    </li>
-{% endfor %}
-</ul>
-
-<h2>Foods</h2>
-<a href="{% url 'main:add_food' %}">Add Food</a>
-<ul>
-{% for food in foods %}
-    <li>
-        {{ food.nama }} - {{ food.kategori }}
-        <p>Price: {{ food.harga }}</p>
-        <p>Discount: {{ food.diskon }}%</p>
-        <p>Restaurant: {{ food.restoran.nama }}</p>
-        <p>{{ food.deskripsi }}</p>
-        <p>Average Rating: {{ food.average_rating }}/5 ({{ food.total_reviews }} reviews)</p>
-        <a href="{% url 'main:add_rating' food.id %}">Add Rating</a>
-        
-        <h4>Reviews:</h4>
-        {% if ratings_by_food|get_item:food.id %}
-            {% for rating in ratings_by_food|get_item:food.id %}
-                <div>
-                    <p>Rating: {{ rating.rating }}/5</p>
-                    {% if rating.comment %}
-                        <p>Comment: {{ rating.comment }}</p>
-                    {% endif %}
-                    <p>By: {{ rating.user.username }} ({{ rating.waktu_comment|date:"d/m/Y H:i" }})</p>
+            <div class="absolute top-0 right-0 space-y-4">
+                {% for feature in features %}
+                <div class="bg-white p-4 rounded-lg shadow-lg">
+                    <h3 class="font-semibold">{{ feature.title }}</h3>
+                    <p class="text-sm text-gray-600">{{ feature.description }}</p>
                 </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto py-16 px-4">
+    <h2 class="text-4xl font-bold mb-8">
+        Our <span class="text-orange-500">Best Delivered</span><br>
+        Categories
+    </h2>
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for category in categories %}
+        <div class="text-center">
+            <div class="bg-{{ category.color }}-100 rounded-full p-8 mb-4">
+                <img src="{% static category.image %}" alt="{{ category.name }}" class="rounded-full">
+            </div>
+            <h3 class="font-semibold mb-2">{{ category.name }}</h3>
+            <button class="text-orange-500 flex items-center justify-center mx-auto">
+                Order Now 
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="bg-gray-900 py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="grid grid-cols-6 gap-4">
+        </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="text-white">
+                <h2 class="text-5xl font-bold mb-4">
+                    Fastest food
+                    <br>
+                    <span class="text-orange-500">Delivery</span> in town
+                </h2>
+                <p class="text-gray-300 mb-8">
+                    Get your dream order fresh, steam
+                    <br>
+                    hot at 20min break time.
+                </p>
+            </div>
+
+            <div class="relative">
+                <div class="relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-12">
+                        <img src="{% static 'images/chef-logo.png' %}" alt="Chef Logo" class="w-24">
+                    </div>
+                    <img src="{% static '../../static/img/homepage/imroatus.jpg' %}" alt="Hot Pizza" class="w-full">
+                </div>
+
+                <div class="absolute top-0 right-0 space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-4">
+                        <div class="bg-gray-100 p-2 rounded-full">
+                            <img src="{% static '../../static/img/homepage/ufo.png' %}" alt="Drone Delivery" class="w-6 h-6">
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Air delivery</h3>
+                            <p class="text-sm text-gray-600">Faster than ever at minimum low charge</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-4">
+                        <div class="bg-gray-100 p-2 rounded-full">
+                            <img src="{% static 'images/ai-icon.png' %}" alt="AI" class="w-6 h-6">
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Automated</h3>
+                            <p class="text-sm text-gray-600">We process food order based on AI management</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute top-0 left-0">
+        <img src="{% static 'images/chips.png' %}" alt="Decorative Chips" class="w-24 opacity-50">
+    </div>
+</section>
+
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">
+            How we <span class="text-orange-500">Serve</span> you
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="text-center">
+                <div class="bg-white rounded-full p-8 mb-4 mx-auto w-32 h-32 flex items-center justify-center">
+                    <img src="{% static service.icon %}" alt="{{ service.name }}" class="w-12 h-12 text-orange-500">
+                </div>
+                <h3 class="font-semibold mb-2">{{ service.title }}</h3>
+                <p class="text-gray-600 text-sm">{{ service.description }}</p>
+            </div>
             {% endfor %}
-        {% else %}
-            <p>No reviews yet</p>
-        {% endif %}
-    </li>
-{% endfor %}
-</ul>
-{% endblock content %}
+        </div>
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto py-16 px-4">
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-yellow-100 p-8 rounded-xl">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-2xl font-bold mb-2">Buy 2<br>Get 1 free</h3>
+                    <div class="text-orange-500 font-bold text-xl">${{ special_offer.price }}</div>
+                </div>
+            </div>
+            <img src="{% static special_offer.image %}" alt="Special Offer" class="mx-auto">
+        </div>
+        <div class="space-y-4">
+            {% for offer in additional_offers %}
+            <div class="bg-{{ offer.color }}-100 p-8 rounded-xl">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-xl font-bold">{{ offer.title }}</h3>
+                    <div class="text-orange-500 font-bold">{{ offer.discount }}</div>
+                </div>
+                <div class="text-2xl font-bold">${{ offer.price }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<footer class="relative">
+    <div class="w-full h-16 bg-green-600 relative">
+        <div class="absolute bottom-0 w-full">
+            <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,48 L1440,48 L1440,0 Q720,48 0,0 Z" fill="#1F2937"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-12">
+                <h2 class="text-white text-4xl font-bold text-center mb-4">
+                    Enjoy <span class="text-orange-500">3000+</span> foods from
+                    <br>
+                    <span class="text-yellow-500">400</span> Restaurants
+                </h2>
+                <div class="flex justify-center mt-8">
+                    <button class="bg-gray-800 text-white px-8 py-3 rounded-full hover:bg-gray-700">
+                        Order Now
+                        <span class="ml-2">→</span>
+                    </button>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-8 mt-12">
+                    <img src="{% static 'images/brands/dunkin.png' %}" alt="Dunkin" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/starbucks.png' %}" alt="Starbucks" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/burger-king.png' %}" alt="Burger King" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/mcdonalds.png' %}" alt="McDonald's" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/pizza-hut.png' %}" alt="Pizza Hut" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/dominos.png' %}" alt="Domino's" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/subway.png' %}" alt="Subway" class="w-12 h-12 bg-white rounded-full p-2">
+                    <img src="{% static 'images/brands/kfc.png' %}" alt="KFC" class="w-12 h-12 bg-white rounded-full p-2">
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex justify-between items-center">
+                <div class="flex items-center">
+                    <h2 class="text-white text-xl font-bold">
+                        GolekMakanRek<span class="text-orange-500"></span>
+                    </h2>
+                </div>
+                
+                <div class="text-gray-400 text-sm">
+                    © 2024 <a href="#" class="text-orange-500">PBP F-10</a> | All Rights Reserved
+                </div>
+
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
-from django.core.validators import MinValueValidator, MaxValueValidator
-from .models import Restaurant, Food, FoodRating
+from ..main.models import Restaurant, Food
+from .models import *
 
 class RestaurantForm(forms.ModelForm):
     class Meta:

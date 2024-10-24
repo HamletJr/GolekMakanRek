@@ -4,30 +4,33 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
-from .forms import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from datetime import datetime
 
 @login_required(login_url='/login')
 def show_main(request):
-    if not request.user.is_authenticated:
-        return redirect('main:login')
-    restaurants = Restaurant.objects.all()
-    foods = Food.objects.all().select_related('restoran')
-    food_ratings = FoodRating.objects.all().select_related('user', 'deskripsi_food')
-    ratings_by_food = {}
-    
-    for rating in food_ratings:
-        food_id = rating.deskripsi_food.id
-        if food_id not in ratings_by_food:
-            ratings_by_food[food_id] = []
-        ratings_by_food[food_id].append(rating)
     context = {
-        'restaurants': restaurants,
-        'foods': foods,
-        'ratings_by_food': ratings_by_food,
-        'last_login': request.COOKIES['last_login'] if 'last_login' in request.COOKIES else None,
+        'features': [
+            {'title': 'Fast delivery', 'description': 'Promise to deliver within 30 mins'},
+            {'title': 'Pick up', 'description': 'Pickup delivery at your doorstep'},
+            {'title': 'Dine in', 'description': 'Enjoy your food fresh crispy and hot'},
+        ],
+        'categories': [
+            {'name': 'Lontong Balap', 'color': 'green', 'image': '../../static/img/homepage/lontongbalap.jpg'},
+            {'name': 'Rujak Cingur', 'color': 'orange', 'image': '../../static/img/homepage/rujakcingur.jpg'},
+            {'name': 'Sego Sambel', 'color': 'yellow', 'image': '../../static/img/homepage/segosambel.jpg'},
+        ],
+        'services': [
+            {'title': 'Automated Packaging', 'description': '100% environment friendly packaging', 'icon': '../../static/img/homepage/ap.avif'},
+            {'title': 'Packed with Love', 'description': 'We deliver the best experiences', 'icon': '../../static/img/homepage/pl.jpg'},
+            {'title': 'Fastest Delivery', 'description': 'Promise to deliver within 30 mins', 'icon': '../../static/img/homepage/fd.webp'},
+        ],
+        'special_offer': {'price': 28, 'image': 'images/burger.jpg'},
+        'additional_offers': [
+            {'title': 'Special Dessert', 'discount': 'Save 20%', 'price': 21, 'color': 'brown'},
+            {'title': 'Tortilla wrap tacos', 'discount': '$12 off', 'price': 18, 'color': 'orange'},
+        ],
     }
     return render(request, 'main.html', context)
 
@@ -63,41 +66,3 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
-
-@login_required(login_url='/login')
-def add_restaurant(request):
-    form = RestaurantForm()
-    if request.method == 'POST':
-        form = RestaurantForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('main:show_main')
-    
-    context = {'form': form}
-    return render(request, 'add_restaurant.html', context)
-
-@login_required(login_url='/login')
-def add_food(request):
-    form = FoodForm()
-    if request.method == 'POST':
-        form = FoodForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('main:show_main')
-    context = {'form': form}
-    return render(request, 'add_food.html', context)
-
-@login_required(login_url='/login')
-def add_rating(request, food_id):
-    food = Food.objects.get(id=food_id)
-    form = FoodRatingForm()
-    if request.method == 'POST':
-        form = FoodRatingForm(request.POST)
-        if form.is_valid():
-            rating = form.save(commit=False)
-            rating.user = request.user
-            rating.deskripsi_food = food
-            rating.save()
-            return redirect('main:show_main')
-    context = {'form': form, 'food': food}
-    return render(request, 'add_rating.html', context)

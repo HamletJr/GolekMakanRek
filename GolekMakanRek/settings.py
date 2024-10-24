@@ -27,8 +27,8 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = ["localhost", 
-                 "127.0.0.1", 
-                 "joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id"]
+                "127.0.0.1", 
+                "joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'food_preview'
 ]
 
 MIDDLEWARE = [
@@ -137,4 +138,3 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost",
                         "http://127.0.0.1",
                         "http://joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id", 
                         "https://joshua-montolalu-golekmakanrek.pbp.cs.ui.ac.id"]
-
