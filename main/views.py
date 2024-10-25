@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from datetime import datetime
 
-@login_required(login_url='/login')
 def show_main(request):
     context = {
         'features': [

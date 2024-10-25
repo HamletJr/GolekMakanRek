@@ -19,6 +19,7 @@ class Food(models.Model):
     diskon = models.IntegerField()
     deskripsi = models.TextField()
     restoran = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    image_url = models.URLField(max_length=200, blank=True, null=True)
 
     @property
     def average_rating(self):
